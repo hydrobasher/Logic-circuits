@@ -15,7 +15,7 @@ public class Node extends Part {
 
     @Override
     public void draw(Graphics2D g) {
-        g.setColor(state ? Main.switch_On : Main.switch_Off);
+        g.setColor(state ? Main.onState_Led : Main.nodeColor);
         g.fillOval(x, y, width, height);
     }
 

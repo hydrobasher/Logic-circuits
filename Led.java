@@ -14,6 +14,11 @@ public class Led extends Part {
     }
 
     @Override
+    public void onDoubleClick() {
+        changeName();
+    }
+
+    @Override
     public boolean[] getBooleanOutputs(boolean[] in) {
         state = false;
         for (Wire w : inputs) {

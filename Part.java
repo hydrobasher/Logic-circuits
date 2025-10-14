@@ -56,6 +56,15 @@ public abstract class Part {
 
     public void onClick() { }
 
+    public void onDoubleClick() { }
+
+    public void changeName() {
+        String newName = javax.swing.JOptionPane.showInputDialog("Change name", name);
+        if (newName != null && !newName.trim().isEmpty() && newName.length() <= 10) {
+            name = newName;
+        }
+    }
+
     public int[] getInputNode(Wire w) { return new int[] {0, 0}; }
 
     public int[] getOutputNode(Wire w) { return new int[] {0, 0}; }

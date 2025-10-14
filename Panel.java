@@ -19,6 +19,8 @@ public class Panel extends JPanel implements MouseListener {
     int dragOffsetX = 0;
     int dragOffsetY = 0;
 
+    int lastClick;
+
     public Panel() {
         addMouseListener(this);
         addMouseWheelListener(sidebar); 
@@ -33,6 +35,8 @@ public class Panel extends JPanel implements MouseListener {
         sidebar.add(new Gate("NAND", 0, 0, 50, 50, Main.NAND_TT));
         sidebar.add(new Led("Q", 0, 0, 50, 50));
         sidebar.add(new Switch("X", 0, 0, 30, 30, false));
+    
+        lastClick = (int) System.currentTimeMillis();
     }
 
     @Override
@@ -94,7 +98,7 @@ public class Panel extends JPanel implements MouseListener {
         g.drawString(text2, 10, 75);
     }
 
-    public void handleRightButtonClick(int x, int y) {
+    public void handleLeftButtonClick(int x, int y) {
         if (dragWire == null) {
             for (int i = 0; i < parts.size(); i++) {
                 Part p = parts.get(i);
@@ -106,16 +110,27 @@ public class Panel extends JPanel implements MouseListener {
         } else {
             for (int i = 0; i < parts.size(); i++) {
                 Part p = parts.get(i);
-                if (p.inside(x, y) && p.canAddInput() && !(p == dragWire)) {
-                    Wire w = new Wire(dragWire, p);
-                    wires.add(w);
-                    dragWire.outputs.add(w);
-                    p.inputs.add(w);
-                    break;
+                if (p.inside(x, y)) {
+                    if (p.canAddInput() && !(p == dragWire)) {
+                        Wire w = new Wire(dragWire, p);
+                        wires.add(w);
+                        dragWire.outputs.add(w);
+                        p.inputs.add(w);
+                    }
+                    dragWire = null;
+                    return;
                 }
             }
 
-            dragWire = null;
+            Part p = new Node("", x, y, 10, 10);
+            parts.add(p);
+
+            Wire w = new Wire(dragWire, p);
+            wires.add(w);
+            dragWire.outputs.add(w);
+            p.inputs.add(w);
+
+            dragWire = p;
         }
     }
 
@@ -134,6 +149,17 @@ public class Panel extends JPanel implements MouseListener {
         }
 
         parts.remove(idx);
+
+        ArrayList<Part> toRemoveParts = new ArrayList<Part>();
+        for (Part p : parts) {
+            if (p instanceof Node && p.inputs.size() == 0 && p.outputs.size() == 0) {
+                toRemoveParts.add(p);
+            }
+        }
+
+        for (Part p : toRemoveParts) {
+            parts.remove(p);
+        }
     }
 
     @Override
@@ -141,24 +167,22 @@ public class Panel extends JPanel implements MouseListener {
         int x = (int) e.getX();
         int y = (int) e.getY();
 
-        if (e.getButton() == java.awt.event.MouseEvent.BUTTON3) {
-            handleRightButtonClick(x, y);
-        } else {
-            if (dragWire != null) {
-                Part p = new Node("", x, y, 10, 10);
-                parts.add(p);
-
-                Wire w = new Wire(dragWire, p);
-                wires.add(w);
-                dragWire.outputs.add(w);
-                p.inputs.add(w);
-
-                dragWire = p;
-            }
+        if (e.getButton() == java.awt.event.MouseEvent.BUTTON1) {
+            handleLeftButtonClick(x, y);
+        } else if (e.getButton() == java.awt.event.MouseEvent.BUTTON3) {
+            dragWire = null;
+            dragIdx = -1;
 
             for (Part p : parts) {
                 if (x > p.x && x < p.x + p.width && y > p.y && y < p.y + p.height) {
                     p.onClick();
+
+                    if (lastClick + 300 > (int) System.currentTimeMillis()) {
+                        p.onDoubleClick();
+                    } else {
+                        lastClick = (int) System.currentTimeMillis();
+                    }
+
                     break;
                 }
             }

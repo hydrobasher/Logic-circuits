@@ -14,6 +14,11 @@ public class Switch extends Part {
     }
 
     @Override
+    public void onDoubleClick() {
+        changeName();
+    }
+
+    @Override
     public void draw(Graphics2D g) {
         g.setColor(state ? Main.switch_On : Main.switch_Off);
 

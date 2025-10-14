@@ -79,7 +79,7 @@ public class Sidebar extends MouseAdapter {
         int x = e.getX();
         int y = e.getY();
 
-        if (x > xOffset && dragPart == null) {
+        if (e.getButton() == java.awt.event.MouseEvent.BUTTON1 && x > xOffset && dragPart == null) {
             for (Part p : parts) {
                 if (x > p.x && x < p.x + p.width && y > p.y && y < p.y + p.height) {
                     dragPart = p.clone();
@@ -96,7 +96,7 @@ public class Sidebar extends MouseAdapter {
         int x = e.getX();
         int y = e.getY();
 
-        if (dragPart != null) {
+        if (e.getButton() == java.awt.event.MouseEvent.BUTTON1 && dragPart != null) {
             if (x < xOffset) {
                 dragPart.x = x - dragOffsetX;
                 dragPart.y = y - dragOffsetY;

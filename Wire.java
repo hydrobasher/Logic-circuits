@@ -11,12 +11,9 @@ public class Wire {
         this.state = false;
     }
 
-    public void update() {
-        // state = start.outputs[startIndex];
-        // end.inputs[endIndex] = state;
-    }
-
     public void destroy() {
+        start.outputs.remove(this);
+        end.inputs.remove(this);
     }
 
     public void draw(Graphics2D g) {

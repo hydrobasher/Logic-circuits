@@ -43,11 +43,11 @@ public class Main {
         new boolean[] {false, false, false, true}
     );
 
-    public static final Color background =    new Color(200, 200, 200);
-    public static final Color onState_Gate =  new Color(20, 200, 20);
+    public static final Color background =    new Color(30, 30, 30);
+    public static final Color onState_Gate =  new Color(250, 250, 0);
     public static final Color offState_Gate = new Color(200, 20, 20);
     public static final Color onState_Led =   new Color(250, 250, 0);
-    public static final Color offState_Led =  new Color(20, 20, 40);
+    public static final Color offState_Led =  new Color(50, 50, 70);
     public static final Color onState_Wire =  new Color(0, 255, 0);
     public static final Color offState_Wire = new Color(10, 10, 10);
     public static final Color switch_On =     new Color(20, 200, 20);
