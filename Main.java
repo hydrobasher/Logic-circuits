@@ -43,6 +43,27 @@ public class Main {
         new boolean[] {false, false, false, true}
     );
 
+    public static final TruthTable[] HALF_ADDER_TT = new TruthTable[] {
+        new TruthTable(
+            new boolean[][] {
+                {true, true},
+                {true, false},
+                {false, true},
+                {false, false}
+            },
+            new boolean[] {false, true, true, false} // Sum
+        ),
+        new TruthTable(
+            new boolean[][] {
+                {true, true},
+                {true, false},
+                {false, true},
+                {false, false}
+            },
+            new boolean[] {true, false, false, false} // Carry
+        )
+    };
+
     public static final Color background =    new Color(30, 30, 30);
     public static final Color onState_Gate =  new Color(250, 250, 0);
     public static final Color offState_Gate = new Color(200, 20, 20);

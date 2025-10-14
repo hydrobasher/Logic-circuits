@@ -35,6 +35,8 @@ public class Panel extends JPanel implements MouseListener {
         sidebar.add(new Gate("NAND", 0, 0, 50, 50, Main.NAND_TT));
         sidebar.add(new Led("Q", 0, 0, 50, 50));
         sidebar.add(new Switch("X", 0, 0, 30, 30, false));
+
+        sidebar.add(new Circuit("Half Adder", 0, 0, 70, 70, Main.HALF_ADDER_TT));
     
         lastClick = (int) System.currentTimeMillis();
     }

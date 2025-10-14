@@ -56,7 +56,8 @@ public class Gate extends Part {
 
     @Override
     public int[] getInputNode(Wire w){
-        if (w == null) return new int[] {(int) x, (int) y + (inputs.size())*height/(maxInputs+1)};
+        // Idk what this line does
+        // if (w == null) return new int[] {(int) x, (int) y + (inputs.size())*height/(maxInputs+1)};
 
         int idx = maxInputs == 1? 0 : inputs.indexOf(w);
 
