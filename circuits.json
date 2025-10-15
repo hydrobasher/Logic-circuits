@@ -21,6 +21,52 @@
           ]
         ],
         "outputs": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "numInputs": 2
+      }
+    ],
+    "parts": [],
+    "wires": [],
+    "states": [
+      false
+    ],
+    "x": 675,
+    "y": 110,
+    "width": 50,
+    "height": 50,
+    "name": "AND",
+    "inputs": [],
+    "outputs": [],
+    "maxInputs": 2,
+    "maxOutputs": 1,
+    "state": false
+  },
+  {
+    "tables": [
+      {
+        "inputs": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "outputs": [
           false,
           false,
           false,
@@ -35,7 +81,7 @@
       false
     ],
     "x": 675,
-    "y": 110,
+    "y": 170,
     "width": 50,
     "height": 50,
     "name": "NOR",
@@ -69,7 +115,7 @@
       false
     ],
     "x": 675,
-    "y": 170,
+    "y": 230,
     "width": 50,
     "height": 50,
     "name": "NOT",
@@ -115,7 +161,7 @@
       false
     ],
     "x": 675,
-    "y": 230,
+    "y": 290,
     "width": 50,
     "height": 50,
     "name": "NAND",
@@ -123,6 +169,680 @@
     "outputs": [],
     "maxInputs": 2,
     "maxOutputs": 1,
+    "state": false
+  },
+  {
+    "tables": [
+      {
+        "inputs": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          true,
+          true,
+          true,
+          false
+        ],
+        "numInputs": 2
+      }
+    ],
+    "parts": [],
+    "wires": [],
+    "states": [
+      false
+    ],
+    "x": 675,
+    "y": 350,
+    "width": 50,
+    "height": 50,
+    "name": "OR",
+    "inputs": [],
+    "outputs": [],
+    "maxInputs": 2,
+    "maxOutputs": 1,
+    "state": false
+  },
+  {
+    "tables": [
+      {
+        "inputs": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          false,
+          true,
+          true,
+          false
+        ],
+        "numInputs": 2
+      }
+    ],
+    "parts": [],
+    "wires": [],
+    "states": [
+      false
+    ],
+    "x": 675,
+    "y": 410,
+    "width": 50,
+    "height": 50,
+    "name": "XOR",
+    "inputs": [],
+    "outputs": [],
+    "maxInputs": 2,
+    "maxOutputs": 1,
+    "state": false
+  },
+  {
+    "tables": [
+      {
+        "inputs": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          false,
+          true,
+          true,
+          false
+        ],
+        "numInputs": 2
+      },
+      {
+        "inputs": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "numInputs": 2
+      }
+    ],
+    "parts": [],
+    "wires": [],
+    "states": [
+      false,
+      false
+    ],
+    "x": 656,
+    "y": 470,
+    "width": 87,
+    "height": 50,
+    "name": "HALF ADDER",
+    "inputs": [],
+    "outputs": [],
+    "maxInputs": 2,
+    "maxOutputs": 2,
+    "state": false
+  },
+  {
+    "tables": [
+      {
+        "inputs": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            false
+          ],
+          [
+            true,
+            false,
+            true
+          ],
+          [
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            true
+          ],
+          [
+            false,
+            true,
+            false
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "numInputs": 3
+      },
+      {
+        "inputs": [
+          [
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            false
+          ],
+          [
+            true,
+            false,
+            true
+          ],
+          [
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            true
+          ],
+          [
+            false,
+            true,
+            false
+          ],
+          [
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          false
+        ],
+        "numInputs": 3
+      }
+    ],
+    "parts": [],
+    "wires": [],
+    "states": [
+      false,
+      false
+    ],
+    "x": 657,
+    "y": 530,
+    "width": 86,
+    "height": 75,
+    "name": "FULL ADDER",
+    "inputs": [],
+    "outputs": [],
+    "maxInputs": 3,
+    "maxOutputs": 2,
+    "state": false
+  },
+  {
+    "tables": [
+      {
+        "inputs": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            false
+          ],
+          [
+            true,
+            true,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            false,
+            false
+          ],
+          [
+            true,
+            false,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            false
+          ],
+          [
+            true,
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            true,
+            true
+          ],
+          [
+            false,
+            true,
+            true,
+            false
+          ],
+          [
+            false,
+            true,
+            false,
+            true
+          ],
+          [
+            false,
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            true,
+            true
+          ],
+          [
+            false,
+            false,
+            true,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "numInputs": 4
+      },
+      {
+        "inputs": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            false
+          ],
+          [
+            true,
+            true,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            false,
+            false
+          ],
+          [
+            true,
+            false,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            false
+          ],
+          [
+            true,
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            true,
+            true
+          ],
+          [
+            false,
+            true,
+            true,
+            false
+          ],
+          [
+            false,
+            true,
+            false,
+            true
+          ],
+          [
+            false,
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            true,
+            true
+          ],
+          [
+            false,
+            false,
+            true,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          true,
+          false,
+          false,
+          true,
+          false,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          false
+        ],
+        "numInputs": 4
+      },
+      {
+        "inputs": [
+          [
+            true,
+            true,
+            true,
+            true
+          ],
+          [
+            true,
+            true,
+            true,
+            false
+          ],
+          [
+            true,
+            true,
+            false,
+            true
+          ],
+          [
+            true,
+            true,
+            false,
+            false
+          ],
+          [
+            true,
+            false,
+            true,
+            true
+          ],
+          [
+            true,
+            false,
+            true,
+            false
+          ],
+          [
+            true,
+            false,
+            false,
+            true
+          ],
+          [
+            true,
+            false,
+            false,
+            false
+          ],
+          [
+            false,
+            true,
+            true,
+            true
+          ],
+          [
+            false,
+            true,
+            true,
+            false
+          ],
+          [
+            false,
+            true,
+            false,
+            true
+          ],
+          [
+            false,
+            true,
+            false,
+            false
+          ],
+          [
+            false,
+            false,
+            true,
+            true
+          ],
+          [
+            false,
+            false,
+            true,
+            false
+          ],
+          [
+            false,
+            false,
+            false,
+            true
+          ],
+          [
+            false,
+            false,
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false,
+          false,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          false
+        ],
+        "numInputs": 4
+      }
+    ],
+    "parts": [],
+    "wires": [],
+    "states": [
+      false,
+      false,
+      false
+    ],
+    "x": 675,
+    "y": 615,
+    "width": 50,
+    "height": 100,
+    "name": "2-bit",
+    "inputs": [],
+    "outputs": [],
+    "maxInputs": 4,
+    "maxOutputs": 3,
     "state": false
   }
 ]

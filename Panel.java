@@ -27,7 +27,8 @@ public class Panel extends JPanel implements MouseListener {
 
     int lastClick;
 
-    JButton saveCircuit = new JButton("SAVE CIRCUIT");
+    JButton saveCircuit = new JButton("SAVE");
+    JButton clear = new JButton("CLEAR");
     JButton loadFile = new JButton("LOAD FROM FILE");
     JButton saveFile = new JButton("SAVE TO FILE");
 
@@ -45,11 +46,15 @@ public class Panel extends JPanel implements MouseListener {
         saveCircuit.addActionListener(this::saveCircuit);
         add(saveCircuit);
 
-        loadFile.setBounds(sidebar.xOffset - 160, 50, 140, 30);
+        clear.setBounds(sidebar.xOffset - 160, 50, 140, 30);
+        clear.addActionListener(this::clear);
+        add(clear);
+
+        loadFile.setBounds(sidebar.xOffset - 160, 90, 140, 30);
         loadFile.addActionListener(this::loadFromFile);
         add(loadFile);
 
-        saveFile.setBounds(sidebar.xOffset - 160, 90, 140, 30);
+        saveFile.setBounds(sidebar.xOffset - 160, 130, 140, 30);
         saveFile.addActionListener(sidebar::save);
         add(saveFile);
 
@@ -78,6 +83,14 @@ public class Panel extends JPanel implements MouseListener {
             System.out.println("Failed to load from file");
             ex.printStackTrace();
         }
+    }
+
+    public void clear(java.awt.event.ActionEvent e){
+        dragIdx = -1;
+        dragWire = null;
+
+        parts = new ArrayList<Part>();
+        wires = new ArrayList<Wire>();
     }
 
     @Override
@@ -177,7 +190,7 @@ public class Panel extends JPanel implements MouseListener {
 
         String name = javax.swing.JOptionPane.showInputDialog("Enter name", "Part " + Integer.toString(sidebar.parts.size() + 1));
         
-        int stringWidth = Math.max(getFontMetrics(getFont()).stringWidth(name) + 12, 40);
+        int stringWidth = Math.max(getFontMetrics(getFont()).stringWidth(name) + 14, 40);
         int preferedWidth = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("Enter width", Integer.toString(stringWidth)));
         int w = Math.max(stringWidth, preferedWidth);
         int h =  25 * Math.max(inputs.size(), outputs.size());
