@@ -8,7 +8,6 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import java.io.File;
 import java.io.FileReader;
 
 public class Panel extends JPanel implements MouseListener {
@@ -28,7 +27,9 @@ public class Panel extends JPanel implements MouseListener {
 
     int lastClick;
 
-    JButton save = new JButton("SAVE");
+    JButton saveCircuit = new JButton("SAVE CIRCUIT");
+    JButton loadFile = new JButton("LOAD FROM FILE");
+    JButton saveFile = new JButton("SAVE TO FILE");
 
     public Panel() {
         setLayout(null);
@@ -40,38 +41,42 @@ public class Panel extends JPanel implements MouseListener {
 
         this.setBackground(Main.background);
 
-        save.setBounds(sidebar.xOffset - 100, 10, 80, 30);
-        save.addActionListener(this::saveCircuit);
-        add(save);
+        saveCircuit.setBounds(sidebar.xOffset - 160, 10, 140, 30);
+        saveCircuit.addActionListener(this::saveCircuit);
+        add(saveCircuit);
+
+        loadFile.setBounds(sidebar.xOffset - 160, 50, 140, 30);
+        loadFile.addActionListener(this::loadFromFile);
+        add(loadFile);
+
+        saveFile.setBounds(sidebar.xOffset - 160, 90, 140, 30);
+        saveFile.addActionListener(sidebar::save);
+        add(saveFile);
 
         sidebar.add(new Input("X", 0, 0, 30, 30, false));
         sidebar.add(new Output("Q", 0, 0, 50, 50));
 
-        File file = new File("circuits.json");
-        if (file.exists() && file.length() > 2)
-            loadFromFile(file);
-        else
-            addDefault();
-
-        lastClick = (int) System.currentTimeMillis();
-    }
-
-    public void addDefault(){
         sidebar.add(new Circuit("AND", 0, 0, 50, 50, new TruthTable[] {Main.AND_TT}));
         sidebar.add(new Circuit("NOR", 0, 0, 50, 50, new TruthTable[] {Main.NOR_TT}));
         sidebar.add(new Circuit("NOT", 0, 0, 50, 50, new TruthTable[] {Main.NOT_TT}));
         sidebar.add(new Circuit("NAND", 0, 0, 50, 50, new TruthTable[] {Main.NAND_TT}));
+
+        lastClick = (int) System.currentTimeMillis();
     }
 
-    public void loadFromFile(File file){
-        try (FileReader reader = new FileReader(file)) {
+    public void loadFromFile(java.awt.event.ActionEvent e){
+        try (FileReader reader = new FileReader("circuits.json")) {
             Gson gson = new Gson();
             ArrayList<Circuit> toLoad = gson.fromJson(reader, new TypeToken<ArrayList<Circuit>>(){}.getType());
+
+            sidebar.clear();
+
             for (Part p : toLoad) {
                 sidebar.add(p);
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
             System.out.println("Failed to load from file");
+            ex.printStackTrace();
         }
     }
 

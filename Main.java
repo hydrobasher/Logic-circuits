@@ -3,8 +3,6 @@ import javax.swing.SwingUtilities;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class Main {
     static final TruthTable NAND_TT = new TruthTable(
@@ -94,17 +92,7 @@ public class Main {
             panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
             frame.add(panel);
             frame.pack();
-            frame.setLocationRelativeTo(null);
-
-            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            frame.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    Panel.sidebar.save();
-                    frame.dispose();
-                }
-            });
-            
+            frame.setLocationRelativeTo(null);           
 
             frame.setVisible(true);
         });

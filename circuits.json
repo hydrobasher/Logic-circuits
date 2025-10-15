@@ -1,0 +1,128 @@
+[
+  {
+    "tables": [
+      {
+        "inputs": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          false,
+          false,
+          false,
+          true
+        ],
+        "numInputs": 2
+      }
+    ],
+    "parts": [],
+    "wires": [],
+    "states": [
+      false
+    ],
+    "x": 675,
+    "y": 110,
+    "width": 50,
+    "height": 50,
+    "name": "NOR",
+    "inputs": [],
+    "outputs": [],
+    "maxInputs": 2,
+    "maxOutputs": 1,
+    "state": false
+  },
+  {
+    "tables": [
+      {
+        "inputs": [
+          [
+            true
+          ],
+          [
+            false
+          ]
+        ],
+        "outputs": [
+          false,
+          true
+        ],
+        "numInputs": 1
+      }
+    ],
+    "parts": [],
+    "wires": [],
+    "states": [
+      false
+    ],
+    "x": 675,
+    "y": 170,
+    "width": 50,
+    "height": 50,
+    "name": "NOT",
+    "inputs": [],
+    "outputs": [],
+    "maxInputs": 1,
+    "maxOutputs": 1,
+    "state": false
+  },
+  {
+    "tables": [
+      {
+        "inputs": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          false,
+          true,
+          true,
+          true
+        ],
+        "numInputs": 2
+      }
+    ],
+    "parts": [],
+    "wires": [],
+    "states": [
+      false
+    ],
+    "x": 675,
+    "y": 230,
+    "width": 50,
+    "height": 50,
+    "name": "NAND",
+    "inputs": [],
+    "outputs": [],
+    "maxInputs": 2,
+    "maxOutputs": 1,
+    "state": false
+  }
+]

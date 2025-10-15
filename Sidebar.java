@@ -72,7 +72,7 @@ public class Sidebar extends MouseAdapter {
         parts.remove(p);
     }
 
-    public void save() {
+    public void save(java.awt.event.ActionEvent e) {
         ArrayList<Circuit> toSave = new ArrayList<Circuit>();
 
         for (Part p : parts) {
@@ -86,6 +86,20 @@ public class Sidebar extends MouseAdapter {
         } catch (Exception _) {
             System.out.println("Save to file failed");
         }
+    }
+
+    public void clear() {
+        dragPart = null;
+        scrollHeight = 0;
+
+        ArrayList<Part> toRemove = new ArrayList<Part>();
+        for (Part p : parts) {
+            if (p instanceof Circuit) {
+                sidebarHeight -= p.height + 10;
+                toRemove.add(p);
+            }
+        }
+        parts.removeAll(toRemove);
     }
 
     @Override
