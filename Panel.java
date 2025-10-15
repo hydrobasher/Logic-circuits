@@ -6,12 +6,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Panel extends JPanel implements MouseListener {
-    public static ArrayList<Part> parts = new ArrayList<Part>();
-    public static ArrayList<Wire> wires = new ArrayList<Wire>();
+    static ArrayList<Part> parts = new ArrayList<Part>();
+    static ArrayList<Wire> wires = new ArrayList<Wire>();
 
-    public Part dragWire = null;
-
-    public Sidebar sidebar = new Sidebar();
+    static Sidebar sidebar = new Sidebar();
 
     static int mouseX = 0;
     static int mouseY = 0;
@@ -19,6 +17,8 @@ public class Panel extends JPanel implements MouseListener {
     int dragIdx = -1;
     int dragOffsetX = 0;
     int dragOffsetY = 0;
+
+    Part dragWire = null;
 
     int lastClick;
 
@@ -147,7 +147,7 @@ public class Panel extends JPanel implements MouseListener {
 
         String name = javax.swing.JOptionPane.showInputDialog("Enter name", "Part " + Integer.toString(sidebar.parts.size() + 1));
         
-        int stringWidth = getFontMetrics(getFont()).stringWidth(name) + 12;
+        int stringWidth = Math.max(getFontMetrics(getFont()).stringWidth(name) + 12, 40);
         int preferedWidth = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("Enter width", Integer.toString(stringWidth)));
         int w = Math.max(stringWidth, preferedWidth);
         int h =  25 * Math.max(inputs.size(), outputs.size());

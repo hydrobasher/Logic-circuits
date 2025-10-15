@@ -1,0 +1,82 @@
+[
+  {
+    "tables": [
+      {
+        "inputs": [
+          [
+            true,
+            true
+          ],
+          [
+            true,
+            false
+          ],
+          [
+            false,
+            true
+          ],
+          [
+            false,
+            false
+          ]
+        ],
+        "outputs": [
+          true,
+          false,
+          false,
+          false
+        ],
+        "numInputs": 2
+      }
+    ],
+    "parts": [],
+    "wires": [],
+    "states": [
+      false
+    ],
+    "x": 675,
+    "y": 10,
+    "width": 50,
+    "height": 50,
+    "name": "AND",
+    "inputs": [],
+    "outputs": [],
+    "maxInputs": 2,
+    "maxOutputs": 1,
+    "state": false
+  },
+  {
+    "tables": [
+      {
+        "inputs": [
+          [
+            true
+          ],
+          [
+            false
+          ]
+        ],
+        "outputs": [
+          false,
+          true
+        ],
+        "numInputs": 1
+      }
+    ],
+    "parts": [],
+    "wires": [],
+    "states": [
+      false
+    ],
+    "x": 675,
+    "y": 70,
+    "width": 50,
+    "height": 50,
+    "name": "NOT",
+    "inputs": [],
+    "outputs": [],
+    "maxInputs": 1,
+    "maxOutputs": 1,
+    "state": false
+  }
+]

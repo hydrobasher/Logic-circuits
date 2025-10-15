@@ -4,6 +4,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.FileWriter;
+
 public class Sidebar extends MouseAdapter {
     int WIDTH = 200;
 
@@ -37,7 +44,6 @@ public class Sidebar extends MouseAdapter {
         }
 
         if (dragPart != null) {
-            // System.out.println("drawing drag part x = " + dragPart.x + " y = " + dragPart.y);
             dragPart.draw(g);
         }
 
@@ -51,6 +57,35 @@ public class Sidebar extends MouseAdapter {
         p.x = xOffset + (WIDTH - p.width) / 2;
         p.y = sidebarHeight - p.height + scrollHeight;
         parts.add(p);
+    }
+
+    public void delete(Part p) {
+        sidebarHeight -= p.height + 10;
+        int idx = parts.indexOf(p);
+
+        for (int i = 0; i < parts.size(); i++) {
+            if (i > idx) {
+                parts.get(i).y -= p.height + 10;
+            }
+        }
+
+        parts.remove(p);
+    }
+
+    public void save() {
+        ArrayList<Circuit> toSave = new ArrayList<Circuit>();
+
+        for (Part p : parts) {
+            if (p instanceof Circuit) 
+                toSave.add((Circuit) p);
+        }
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter("out.json")) {
+            gson.toJson(toSave, writer);
+        } catch (Exception _) {
+            System.out.println("Save to file failed");
+        }
     }
 
     @Override
@@ -69,9 +104,37 @@ public class Sidebar extends MouseAdapter {
         scrollHeight += add;
     }
 
+    public void handleRightButtonClick(Part p) {
+        if (p instanceof Switch || p instanceof Led) return;
+
+        JPopupMenu popup = new JPopupMenu();
+
+        JMenuItem option1 = new JMenuItem("Delete");
+        option1.addActionListener(_ -> delete(p));
+        popup.add(option1);
+
+        JMenuItem option2 = new JMenuItem("Rename");
+        option2.addActionListener(_ -> p.changeName());
+        popup.add(option2);
+        
+        popup.show(Main.panel, p.x, p.y);
+    }
+
     @Override
     public void mouseClicked(java.awt.event.MouseEvent e) {
         dragPart = null;
+
+        if (e.getButton() == java.awt.event.MouseEvent.BUTTON3 && e.getX() > xOffset) {
+            int x = e.getX();
+            int y = e.getY();
+
+            for (Part p : parts) {
+                if (p.inside(x, y)) {
+                    handleRightButtonClick(p);
+                    break;
+                }
+            }
+        }
     }
 
     @Override
