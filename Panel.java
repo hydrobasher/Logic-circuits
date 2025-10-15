@@ -22,9 +22,11 @@ public class Panel extends JPanel implements MouseListener {
 
     int lastClick;
 
-    Button save = new Button("Save", sidebar.xOffset - 100, 10, 80, 30);
+    JButton save = new JButton("SAVE");
 
     public Panel() {
+        setLayout(null);
+
         addMouseListener(this);
         addMouseWheelListener(sidebar); 
         addMouseListener(sidebar);
@@ -32,15 +34,19 @@ public class Panel extends JPanel implements MouseListener {
 
         this.setBackground(Main.background);
 
-        sidebar.add(new Gate("AND", 0, 0, 50, 50, Main.AND_TT));
-        sidebar.add(new Gate("NOR", 0, 0, 50, 50, Main.NOR_TT));
-        sidebar.add(new Gate("NOT", 0, 0, 50, 50, Main.NOT_TT));
-        sidebar.add(new Gate("NAND", 0, 0, 50, 50, Main.NAND_TT));
+        save.setBounds(sidebar.xOffset - 100, 10, 80, 30);
+        save.addActionListener(this::saveCircuit);
+        add(save);
+
+        sidebar.add(new Circuit("AND", 0, 0, 50, 50, new TruthTable[] {Main.AND_TT}));
+        sidebar.add(new Circuit("NOR", 0, 0, 50, 50, new TruthTable[] {Main.NOR_TT}));
+        sidebar.add(new Circuit("NOT", 0, 0, 50, 50, new TruthTable[] {Main.NOT_TT}));
+        sidebar.add(new Circuit("NAND", 0, 0, 50, 50, new TruthTable[] {Main.NAND_TT}));
         sidebar.add(new Led("Q", 0, 0, 50, 50));
         sidebar.add(new Switch("X", 0, 0, 30, 30, false));
 
         sidebar.add(new Circuit("Half Adder", 0, 0, 75, 50, Main.HALF_ADDER_TT));
-    
+
         lastClick = (int) System.currentTimeMillis();
     }
 
@@ -87,8 +93,6 @@ public class Panel extends JPanel implements MouseListener {
 
         sidebar.draw(g);
 
-        save.draw(g);
-
         if (dragWire != null) {
             g.setColor(Main.offState_Wire);
             g.setStroke(new BasicStroke(5));
@@ -101,7 +105,10 @@ public class Panel extends JPanel implements MouseListener {
         g.drawString(txt, 10, 75);
     }
 
-    public void saveCircuit() {
+    public void saveCircuit(java.awt.event.ActionEvent e) {
+        dragWire = null;
+        dragIdx = -1;
+
         ArrayList<Switch> inputs = new ArrayList<>();
         ArrayList<Led> outputs = new ArrayList<>();
 
@@ -164,16 +171,6 @@ public class Panel extends JPanel implements MouseListener {
     }
 
     public void handleLeftButtonClick(int x, int y) {
-        if (save.inside(x, y)) {
-            save.onClick();
-
-            saveCircuit();
-
-            dragWire = null;
-            dragIdx = -1;
-            return;
-        }
-
         if (dragWire == null) {
             for (int i = 0; i < parts.size(); i++) {
                 Part p = parts.get(i);
