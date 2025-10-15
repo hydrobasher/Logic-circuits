@@ -35,9 +35,9 @@ public abstract class Part {
         this.maxOutputs = p.maxOutputs;
     }
 
-    public abstract Part clone();
+    public Part clone() { return null; }
 
-    public void update() {
+    public boolean update() {
         boolean[] in = new boolean[inputs.size()];
         for (Wire w : inputs) {
             in[inputs.indexOf(w)] = w.state;
@@ -45,12 +45,18 @@ public abstract class Part {
 
         boolean[] out = getBooleanOutputs(in);
 
+        boolean flag = false;
         for (int i = 0; i < outputs.size(); i++) {
+            if (outputs.get(i).state != out[i])
+                flag = true;
+
             outputs.get(i).state = out[i];
         }
+
+        return flag;
     }
 
-    public abstract boolean[] getBooleanOutputs(boolean[] in);
+    public boolean[] getBooleanOutputs(boolean[] in) { return new boolean[outputs.size()]; }
 
     public abstract void draw(Graphics2D g);
 

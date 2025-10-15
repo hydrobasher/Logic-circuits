@@ -75,6 +75,7 @@ public class Main {
     public static final Color switch_Off =    new Color(200, 20, 20);
     public static final Color nodeColor =     new Color(0, 0, 0);
     public static final Color sidebarColor =  new Color(150, 150, 150);
+    public static final Color btnColor =      new Color(100, 100, 100);
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;

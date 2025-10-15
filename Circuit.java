@@ -37,6 +37,9 @@ public class Circuit extends Part {
             }
         }
 
+        if (outputs.size() == 1)
+            state = states[0];
+
         boolean[] out = new boolean[outputs.size()];
         for (int i = 0; i < outputs.size(); i++) {
             out[i] = states[i];

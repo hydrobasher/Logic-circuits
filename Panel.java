@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Panel extends JPanel implements MouseListener {
     public static ArrayList<Part> parts = new ArrayList<Part>();
@@ -21,6 +22,8 @@ public class Panel extends JPanel implements MouseListener {
 
     int lastClick;
 
+    Button save = new Button("Save", sidebar.xOffset - 100, 10, 80, 30);
+
     public Panel() {
         addMouseListener(this);
         addMouseWheelListener(sidebar); 
@@ -36,7 +39,7 @@ public class Panel extends JPanel implements MouseListener {
         sidebar.add(new Led("Q", 0, 0, 50, 50));
         sidebar.add(new Switch("X", 0, 0, 30, 30, false));
 
-        sidebar.add(new Circuit("Half Adder", 0, 0, 70, 70, Main.HALF_ADDER_TT));
+        sidebar.add(new Circuit("Half Adder", 0, 0, 75, 50, Main.HALF_ADDER_TT));
     
         lastClick = (int) System.currentTimeMillis();
     }
@@ -56,10 +59,6 @@ public class Panel extends JPanel implements MouseListener {
     public void update() {
         mouseX = MouseInfo.getPointerInfo().getLocation().x - this.getLocationOnScreen().x;
         mouseY = MouseInfo.getPointerInfo().getLocation().y - this.getLocationOnScreen().y;
-
-        // for (Wire w : wires) {
-        //     w.update();
-        // }
 
         for (Part p : parts) {
             p.update();
@@ -88,6 +87,8 @@ public class Panel extends JPanel implements MouseListener {
 
         sidebar.draw(g);
 
+        save.draw(g);
+
         if (dragWire != null) {
             g.setColor(Main.offState_Wire);
             g.setStroke(new BasicStroke(5));
@@ -95,12 +96,84 @@ public class Panel extends JPanel implements MouseListener {
             g.setStroke(new BasicStroke(2));
         }
 
-        String text2 = "drag part = " + dragIdx;
+        String txt = "drag part = " + dragIdx;
         g.setColor(Color.BLACK);
-        g.drawString(text2, 10, 75);
+        g.drawString(txt, 10, 75);
+    }
+
+    public void saveCircuit() {
+        ArrayList<Switch> inputs = new ArrayList<>();
+        ArrayList<Led> outputs = new ArrayList<>();
+
+        for (Part p : parts) {
+            if (p instanceof Switch) {
+                inputs.add((Switch) p);
+            } else if (p instanceof Led) {
+                outputs.add((Led) p);
+            }
+        }
+
+        if (inputs.isEmpty() || outputs.isEmpty() || inputs.size() > 10 || outputs.size() > 10) {
+            JOptionPane.showMessageDialog(this, "Circuit must have at least one input and one output", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        inputs.sort(Comparator.comparing((Switch s) -> s.y).thenComparing(s -> s.x));
+        outputs.sort(Comparator.comparing((Led l) -> l.y).thenComparing(l -> l.x));
+
+        TruthTable[] tables = new TruthTable[outputs.size()];
+        for (int i = 0; i < outputs.size(); i++) 
+            tables[i] = new TruthTable(inputs.size());
+            
+        int count = (int) Math.pow(2, inputs.size());
+        for (int i = 0; i < count; i++){
+
+            for (int j = 0; j < inputs.size(); j++){
+                inputs.get(j).state = tables[0].inputs[i][j];
+            }
+
+            calculateTruthTables(inputs, outputs, i, tables);
+        }
+
+        for (TruthTable tt : tables)
+            System.out.println(tt.toString() + "\n");
+
+        String name = javax.swing.JOptionPane.showInputDialog("Enter name", "Part " + Integer.toString(sidebar.parts.size() + 1));
+        
+        int stringWidth = getFontMetrics(getFont()).stringWidth(name) + 12;
+        int preferedWidth = Integer.parseInt(javax.swing.JOptionPane.showInputDialog("Enter width", Integer.toString(stringWidth)));
+        int w = Math.max(stringWidth, preferedWidth);
+        int h =  25 * Math.max(inputs.size(), outputs.size());
+        Circuit c = new Circuit(name, 0, 0, w, h, tables);
+        sidebar.add(c);
+    }
+
+    public void calculateTruthTables(ArrayList<Switch> inputs, ArrayList<Led> outputs, int idx, TruthTable[] tables) {
+        boolean flag = true;
+        while (flag){
+            flag = false;
+            for (Part p : parts){
+                if (p.update())
+                    flag = true;
+            }
+        }
+
+        for (int i = 0; i < outputs.size(); i++) {
+            tables[i].outputs[idx] = outputs.get(i).state;
+        }
     }
 
     public void handleLeftButtonClick(int x, int y) {
+        if (save.inside(x, y)) {
+            save.onClick();
+
+            saveCircuit();
+
+            dragWire = null;
+            dragIdx = -1;
+            return;
+        }
+
         if (dragWire == null) {
             for (int i = 0; i < parts.size(); i++) {
                 Part p = parts.get(i);
