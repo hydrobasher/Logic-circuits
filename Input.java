@@ -1,16 +1,16 @@
 import java.awt.Graphics2D;
 
-public class Switch extends Part {
-    public Switch(String name, int x, int y, int width, int height, boolean state) {
+public class Input extends Part {
+    public Input(String name, int x, int y, int width, int height, boolean state) {
         super(name, x, y, width, height, 0, -1);
     }
 
-    public Switch(Switch s) {
+    public Input(Input s) {
         super(s);
     }
 
-    public Switch clone() {
-        return new Switch(this);
+    public Input clone() {
+        return new Input(this);
     }
 
     @Override

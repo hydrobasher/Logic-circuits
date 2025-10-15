@@ -1,9 +1,15 @@
 import javax.swing.*;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Comparator;
+
+import java.io.File;
+import java.io.FileReader;
 
 public class Panel extends JPanel implements MouseListener {
     static ArrayList<Part> parts = new ArrayList<Part>();
@@ -38,16 +44,35 @@ public class Panel extends JPanel implements MouseListener {
         save.addActionListener(this::saveCircuit);
         add(save);
 
+        sidebar.add(new Input("X", 0, 0, 30, 30, false));
+        sidebar.add(new Output("Q", 0, 0, 50, 50));
+
+        File file = new File("circuits.json");
+        if (file.exists() && file.length() > 2)
+            loadFromFile(file);
+        else
+            addDefault();
+
+        lastClick = (int) System.currentTimeMillis();
+    }
+
+    public void addDefault(){
         sidebar.add(new Circuit("AND", 0, 0, 50, 50, new TruthTable[] {Main.AND_TT}));
         sidebar.add(new Circuit("NOR", 0, 0, 50, 50, new TruthTable[] {Main.NOR_TT}));
         sidebar.add(new Circuit("NOT", 0, 0, 50, 50, new TruthTable[] {Main.NOT_TT}));
         sidebar.add(new Circuit("NAND", 0, 0, 50, 50, new TruthTable[] {Main.NAND_TT}));
-        sidebar.add(new Led("Q", 0, 0, 50, 50));
-        sidebar.add(new Switch("X", 0, 0, 30, 30, false));
+    }
 
-        sidebar.add(new Circuit("Half Adder", 0, 0, 75, 50, Main.HALF_ADDER_TT));
-
-        lastClick = (int) System.currentTimeMillis();
+    public void loadFromFile(File file){
+        try (FileReader reader = new FileReader(file)) {
+            Gson gson = new Gson();
+            ArrayList<Circuit> toLoad = gson.fromJson(reader, new TypeToken<ArrayList<Circuit>>(){}.getType());
+            for (Part p : toLoad) {
+                sidebar.add(p);
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to load from file");
+        }
     }
 
     @Override
@@ -109,14 +134,14 @@ public class Panel extends JPanel implements MouseListener {
         dragWire = null;
         dragIdx = -1;
 
-        ArrayList<Switch> inputs = new ArrayList<>();
-        ArrayList<Led> outputs = new ArrayList<>();
+        ArrayList<Input> inputs = new ArrayList<>();
+        ArrayList<Output> outputs = new ArrayList<>();
 
         for (Part p : parts) {
-            if (p instanceof Switch) {
-                inputs.add((Switch) p);
-            } else if (p instanceof Led) {
-                outputs.add((Led) p);
+            if (p instanceof Input) {
+                inputs.add((Input) p);
+            } else if (p instanceof Output) {
+                outputs.add((Output) p);
             }
         }
 
@@ -125,8 +150,8 @@ public class Panel extends JPanel implements MouseListener {
             return;
         }
         
-        inputs.sort(Comparator.comparing((Switch s) -> s.y).thenComparing(s -> s.x));
-        outputs.sort(Comparator.comparing((Led l) -> l.y).thenComparing(l -> l.x));
+        inputs.sort(Comparator.comparing((Input s) -> s.y).thenComparing(s -> s.x));
+        outputs.sort(Comparator.comparing((Output l) -> l.y).thenComparing(l -> l.x));
 
         TruthTable[] tables = new TruthTable[outputs.size()];
         for (int i = 0; i < outputs.size(); i++) 
@@ -155,7 +180,7 @@ public class Panel extends JPanel implements MouseListener {
         sidebar.add(c);
     }
 
-    public void calculateTruthTables(ArrayList<Switch> inputs, ArrayList<Led> outputs, int idx, TruthTable[] tables) {
+    public void calculateTruthTables(ArrayList<Input> inputs, ArrayList<Output> outputs, int idx, TruthTable[] tables) {
         boolean flag = true;
         while (flag){
             flag = false;

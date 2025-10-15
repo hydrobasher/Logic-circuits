@@ -81,7 +81,7 @@ public class Sidebar extends MouseAdapter {
         }
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter("out.json")) {
+        try (FileWriter writer = new FileWriter("circuits.json")) {
             gson.toJson(toSave, writer);
         } catch (Exception _) {
             System.out.println("Save to file failed");
@@ -105,7 +105,7 @@ public class Sidebar extends MouseAdapter {
     }
 
     public void handleRightButtonClick(Part p) {
-        if (p instanceof Switch || p instanceof Led) return;
+        if (p instanceof Input || p instanceof Output) return;
 
         JPopupMenu popup = new JPopupMenu();
 

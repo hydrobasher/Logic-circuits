@@ -1,16 +1,16 @@
 import java.awt.Graphics2D;
 
-public class Led extends Part {
-    public Led(String name, int x, int y, int width, int height) {
+public class Output extends Part {
+    public Output(String name, int x, int y, int width, int height) {
         super(name, x, y, width, height, -1, 0);
     }
 
-    public Led(Led l) {
+    public Output(Output l) {
         super(l);
     }
 
-    public Led clone() {
-        return new Led(this);
+    public Output clone() {
+        return new Output(this);
     }
 
     @Override
